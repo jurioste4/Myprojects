@@ -2,6 +2,7 @@
 __pycache__/
 
 data/
+Systam_folder/
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
@@ -10,7 +11,7 @@ api_keys.py
 .DS_Store
 
 .pytest_cache/
-Project1/
+
 
 # Jupyter Notebook
 .ipynb_checkpoints
