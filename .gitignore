@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+data/
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+api_keys.py
+
+.DS_Store
+
+.pytest_cache/
+Project1/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+
+
+
+# mypy
+.mypy_cache/
