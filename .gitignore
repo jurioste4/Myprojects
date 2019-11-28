@@ -1,6 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-
+config.py
 data/
 Systam_folder/
 # Installer logs
