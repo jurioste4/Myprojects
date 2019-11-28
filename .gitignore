@@ -1,6 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-config.py
+web_app/config.py
 data/
 Systam_folder/
 # Installer logs
@@ -16,7 +16,7 @@ api_keys.py
 # Jupyter Notebook
 .ipynb_checkpoints
 
-
+.pytest_cache/
 
 
 # mypy
