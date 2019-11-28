@@ -2,6 +2,7 @@
 __pycache__/
 web_app/config.py
 data/
+config.py
 Systam_folder/
 # Installer logs
 pip-log.txt
