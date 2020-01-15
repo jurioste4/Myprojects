@@ -1,6 +1,14 @@
-var defaultURL = "usa";
-d3.json(defaultURL).then(function(data) {
-    var data =[data]
-    var layout = {margin: {t:30, b: 100} };
-    Ploty.plot("bar", data, layout);
-});
+var url = "/report";
+
+function plot() {
+    d3.json(url).then(function(response){
+
+        console.log(response);
+        var trace = {
+            type: "scatter",
+            mode: "lines",
+            name: "Usa report and Compiar",
+            x: response.map(data => data.Year)
+        }
+    })
+}
