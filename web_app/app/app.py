@@ -29,6 +29,9 @@ def index():
    """Home Page """
    return render_template("index.html")
 
+@app.route("/test")
+def test():
+    results = db.session.query(country).filter((country.country=='china'))
 
 # @app.route("/report")
 # def report():

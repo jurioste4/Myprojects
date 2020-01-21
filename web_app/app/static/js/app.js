@@ -8,7 +8,7 @@ function plot() {
             type: "scatter",
             mode: "lines",
             name: "Usa report and Compiar",
-            x: response.map(data => data.Year)
+            x: response.map(report => report.Year)
         }
     })
 }
