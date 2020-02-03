@@ -1,8 +1,6 @@
 import os
 import pandas as pd 
-import numpy as np 
-
-
+import json
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
@@ -26,13 +24,29 @@ country = Base.classes.country
 
 @app.route("/")
 def index():
-   """Home Page """
+   results = db.engine.execute("SELECT country,UR,Growth,inflation,ER FROM country where Year in ('2014')")
+    # results_two = db.engine.execute("SELECT country,UR,Growth,inflation,ER FROM country where Year in ('2015')")
+    df = pd.DataFrame(results, columns=['country','UR','Growth','inflation','ER'])
+    # df_two = pd.DataFrame(results_two, columns=['country','UR','Growth','inflation','ER'])  
+    chart_data = df.to_dict(orient="records")
+    chart_data = json.dump
    return render_template("index.html")
 
-@app.route("/test")
-def test():
-    results = db.session.query(country).filter((country.country=='china'))
+# @app.route("/test")
+# def test():
+#     results = db.engine.execute("SELECT country,UR,Growth,inflation,ER FROM country where Year in ('2014')")
+#     results_two = db.engine.execute("SELECT country,UR,Growth,inflation,ER FROM country where Year in ('2015')")
+#     df = pd.DataFrame(results, columns=['country','UR','Growth','inflation','ER'])
+#     df_two = pd.DataFrame(results_two, columns=['country','UR','Growth','inflation','ER'])  
+#     test = df.to_dict(orient="records")
+    
+#     return jsonify('year_2014:',test,'year_2015:',df_two.to_dict(orient="records"))
 
+
+    
+    
+
+  
 # @app.route("/report")
 # def report():
 #     results = db.session.query(country).all()
@@ -56,9 +70,14 @@ def test():
 @app.route("/data")
 def data():
     
-    df = pd.read_sql("SELECT * FROM country", con=db.engine)
-   
+    results = db.engine.execute('SELECT Year,country,UR,Growth,inflation,ER FROM country')
+    df = pd.DataFrame(results, columns=['Year','country','UR','Growth','inflation','ER'])
     
+    # four = df.loc[df["Year"]=="2014",:]
+    # five = df.loc[df["Year"]=="2015",:]
+    # six  = df.loc[df["Year"]=="2016",:]
+    # seven  = df.loc[df["Year"]=="2017",:]
+    # eight = df.loc[df["Year"]=="2018",:]
 
     return jsonify(df.to_dict(orient="records"))
 
