@@ -1,6 +1,7 @@
 import json
 import plotly
 import plotly.graph_objs as go
+import plotly.express as px
 import numpy as np
 from sqlalchemy import func
 from sqlalchemy.ext.automap import automap_base
@@ -13,6 +14,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
+app.debug = True
 
 app.config["SQLALCHEMY_DATABASE_URI"]="sqlite:///db/country.db"
 db = SQLAlchemy(app)
@@ -29,7 +31,7 @@ country = Base.classes.country
 #     return render_template("index.html")
 
 
-@app.route("/")
+@app.route('/')
 def index():
     results = db.engine.execute(
         'SELECT Year,country,UR,Growth,inflation,ER,Population FROM country')
@@ -42,7 +44,7 @@ def index():
     # return jsonify(data)
     
     graph = dict(
-        data =[go.scatter(
+        data =[go.Scatter(
             x=df["Year"],
             y=df["UR"]
         )],
@@ -60,7 +62,7 @@ def index():
 
     graphJSON = json.dumps(graph,cls=plotly.utils.PlotlyJSONEncoder)
 
-    return render_template('index.html', graphJSON=graphJSON)
+    return render_template('layouts/index.html', graphJSON=graphJSON)
 
 # @app.route("/data")
 # def data():
@@ -88,5 +90,5 @@ def index():
     
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=9999)
