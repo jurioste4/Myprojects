@@ -1,11 +1,11 @@
 import json
 import plotly
 import plotly.graph_objs as go
-import plotly.express as px
+# import plotly.express as px
 import numpy as np
 from sqlalchemy import func
 from sqlalchemy.ext.automap import automap_base
-import pandas as pd 
+import pandas as pd
 from flask import (
     Flask,
     render_template,
@@ -14,9 +14,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
-app.debug = True
 
-app.config["SQLALCHEMY_DATABASE_URI"]="sqlite:///db/country.db"
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/country.db"
 db = SQLAlchemy(app)
 
 Base = automap_base()
@@ -25,70 +25,38 @@ Base.prepare(db.engine, reflect=True)
 country = Base.classes.country
 
 
-
-# @app.route("/")
-# def index():
-#     return render_template("index.html")
-
-
 @app.route('/')
 def index():
     results = db.engine.execute(
         'SELECT Year,country,UR,Growth,inflation,ER,Population FROM country')
     df = pd.DataFrame(results, columns=[
                       'Year', 'country', 'UR', 'Growth', 'inflation', 'ER', 'Population'])
-    # chart_data = df.to_dict(orient="records")
-    # chart_data = json.dumps(chart_data)
-    # data = {'chart_data': chart_data}
-    
-    # return jsonify(data)
-    
-    graph = dict(
-        data =[go.Scatter(
-            x=df["Year"],
-            y=df["UR"]
-        )],
-        layout=dict(
-            title='This will work',
-            yaxis=dict(
-                title="Year"
-            ),
-            xaxis=dict(
-                title="UR"
-            )
-        )
 
+    usa = df[(df['country'] == 'usa')]
+    china = df[(df.country == 'china')]
+    graph = dict(
+        data=[go.Bar(
+            x=usa["Year"],
+            y=usa["UR"]
+        ),
+            go.Bar(name='China',
+                   x=china.Year,
+                   y=china['UR'])],
+        layout=dict(barmode='group',
+                    title='test',
+                    yaxis=dict(
+                        title="UR"
+                    ),
+                    xaxis=dict(
+                        title="Year"
+                    )
+                    )
     )
 
-    graphJSON = json.dumps(graph,cls=plotly.utils.PlotlyJSONEncoder)
+    graphJSON = json.dumps(graph, cls=plotly.utils.PlotlyJSONEncoder)
 
     return render_template('layouts/index.html', graphJSON=graphJSON)
 
-# @app.route("/data")
-# def data():
-#     results = db.session.query(country).all()
-
-#     all_countrys = []
-#     for countrys in results:
-#         country_dict = {}
-#         country_dict["Year"]  = countrys.Year
-#         country_dict["GDP"] = countrys.GDP
-#         country_dict["Growth"] = countrys.Growth
-#         country_dict["Inflation"] = countrys.Inflation
-#         country_dict["UR"] = countrys.UR
-#         country_dict["ER"] = countrys.ER
-#         country_dict["Population"] = countrys.Population
-#         country_dict["Avg_age_population"] = countrys.Avg_age_population
-#         country_dict["country"]  = countrys.country        
-#         all_countrys.append(country_dict)
-    
-#     return jsonify(all_countrys)
-
-
-    
-
-    
-
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=9999)
+    app.run(host='0.0.0.0', debug=True, port=3134)

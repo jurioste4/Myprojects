@@ -26,7 +26,7 @@ df = pd.DataFrame(results, columns=[
 @app.route("/")
 def index():
 
-    return render_template("index.html")
+    return render_template("/layouts/index.html")
 
 
 @app.route("/report")
@@ -37,14 +37,13 @@ def report():
     for countrys in results:
         country_dict = {}
         country_dict["Year"] = countrys.Year
-        country_dict["GDP"] = countrys.GDP
+        country_dict["country"] = countrys.country
         country_dict["Growth"] = countrys.Growth
         country_dict["Inflation"] = countrys.Inflation
         country_dict["UR"] = countrys.UR
         country_dict["ER"] = countrys.ER
         country_dict["Population"] = countrys.Population
-        country_dict["Avg_age_population"] = countrys.Avg_age_population
-        country_dict["country"] = countrys.country
+
         all_countrys.append(country_dict)
 
     return jsonify(all_countrys)
@@ -54,10 +53,10 @@ def report():
 def data():
     chart_data = df.to_dict(orient="records")
     # chart_data = json.dumps(chart_data)
-    data = {'chart_data': chart_data}
+    # data = {'chart_data': chart_data}
 
     return jsonify({'Data': list(chart_data)})
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=9999)
