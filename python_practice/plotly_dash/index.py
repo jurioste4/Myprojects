@@ -36,4 +36,4 @@ def display_page(pathname):
 
 # Runs the server at http://127.0.0.1:5000/
 if __name__ == '__main__':
-    app.run_server(port=5000, host='127.0.01', debug=True)
+    app.run_server(port=5000, host='127.0.0.1', debug=True)
