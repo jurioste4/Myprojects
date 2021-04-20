@@ -22,3 +22,4 @@ api_keys.py
 
 # mypy
 .mypy_cache/
+plotly_dash/cleandata/avocado-updated-2020.csv
