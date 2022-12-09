@@ -20,7 +20,7 @@ Bottleneck==1.3.2
 branca @ file:///home/conda/feedstock_root/build_artifacts/branca_1609346930842/work
 Brotli @ file:///tmp/build/80754af9/brotli-split_1602517619121/work
 brotlipy==0.7.0
-certifi==2021.10.8
+certifi==2022.12.7
 cffi @ file:///opt/conda/conda-bld/cffi_1642701102775/work
 chardet @ file:///tmp/build/80754af9/chardet_1607706746162/work
 charset-normalizer @ file:///tmp/build/80754af9/charset-normalizer_1630003229654/work
